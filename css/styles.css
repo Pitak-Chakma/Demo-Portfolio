@@ -161,6 +161,17 @@ img {
     transform: translateY(-3px);
 }
 
+/* Special style for the achievements button in the hero section */
+.hero-buttons .btn-secondary {
+    color: white;
+    border-color: white;
+}
+
+.hero-buttons .btn-secondary:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
 /* Theme Toggle */
 .theme-toggle {
     position: fixed;

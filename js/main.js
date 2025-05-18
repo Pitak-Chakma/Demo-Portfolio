@@ -173,6 +173,9 @@ function initVideoSlider() {
         if (index < 0) index = slides.length - 1;
         if (index >= slides.length) index = 0;
         
+        // Stop any currently playing videos before changing slides
+        stopAllVideos();
+        
         currentIndex = index;
         updateSlider();
         resetAutoplay();
@@ -202,6 +205,29 @@ function initVideoSlider() {
         // Update progress bar
         const progressPercentage = ((currentIndex + 1) / slides.length) * 100;
         progressFill.style.width = `${progressPercentage}%`;
+    }
+    
+    // Function to stop all playing videos
+    function stopAllVideos() {
+        slides.forEach(slide => {
+            const iframe = slide.querySelector('iframe');
+            if (iframe) {
+                // Replace the iframe with the original content
+                const videoId = slide.getAttribute('data-video-id');
+                slide.innerHTML = `
+                    <div class="slide-content">
+                        <div class="play-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+                `;
+                
+                // Reset the background image
+                slide.style.backgroundImage = `url(https://img.youtube.com/vi/${videoId}/hqdefault.jpg)`;
+            }
+        });
     }
     
     // Play video
