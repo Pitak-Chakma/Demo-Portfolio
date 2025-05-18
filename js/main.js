@@ -286,14 +286,14 @@ function initParticles() {
                     }
                 },
                 opacity: {
-                    value: 0.3,
+                    value: 0.7,
                     random: false,
                     anim: {
                         enable: false
                     }
                 },
                 size: {
-                    value: 3,
+                    value: 4,
                     random: true,
                     anim: {
                         enable: false
@@ -303,8 +303,8 @@ function initParticles() {
                     enable: true,
                     distance: 150,
                     color: '#ffffff',
-                    opacity: 0.2,
-                    width: 1
+                    opacity: 0.5,
+                    width: 1.5
                 },
                 move: {
                     enable: true,
