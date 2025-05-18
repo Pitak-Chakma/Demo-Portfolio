@@ -36,15 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Check localStorage or system preference for initial theme
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-        currentTheme = prefersDarkScheme.matches ? 'dark' : 'light';
-    }
+    // Always start with light mode regardless of system preference
+    let currentTheme = 'light';
     
-    // Apply initial theme
+    // Apply light theme on initial load
     document.body.setAttribute('data-theme', currentTheme);
     
     // Toggle theme on button click
@@ -137,7 +133,9 @@ function initVideoSlider() {
         // Initialize backgrounds for slides and thumbnails
         slides.forEach((slide, index) => {
             const videoId = slide.getAttribute('data-video-id');
-            slide.style.backgroundImage = `url(https://img.youtube.com/vi/${videoId}/maxresdefault.jpg)`;
+            
+            // Use more reliable thumbnail format for main slides
+            slide.style.backgroundImage = `url(https://img.youtube.com/vi/${videoId}/hqdefault.jpg)`;
             
             // Create dots
             const dot = document.createElement('div');
@@ -146,9 +144,9 @@ function initVideoSlider() {
             dot.addEventListener('click', () => goToSlide(index));
             sliderDotsContainer.appendChild(dot);
             
-            // Setup thumbnails
+            // Setup thumbnails with more reliable format
             if (thumbnails[index]) {
-                thumbnails[index].style.backgroundImage = `url(https://img.youtube.com/vi/${videoId}/mqdefault.jpg)`;
+                thumbnails[index].style.backgroundImage = `url(https://img.youtube.com/vi/${videoId}/hqdefault.jpg)`;
                 thumbnails[index].addEventListener('click', () => goToSlide(index));
             }
         });
