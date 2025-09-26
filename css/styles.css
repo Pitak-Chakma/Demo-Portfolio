@@ -817,15 +817,88 @@ img {
     display: none;
 }
 
-/* Media Section */
+/* Media Section Styles */
 .media-section {
-    background-color: var(--bg-color);
+    background-color: var(--section-bg);
 }
 
 .media-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+/* Photo Album Section Styles */
+.photo-album-section {
+    background-color: var(--section-bg);
+}
+
+/* Masonry Grid Layout */
+.masonry-gallery {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+    column-count: 3;
+    column-gap: 20px;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+}
+
+.masonry-content {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.masonry-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.masonry-content img {
+    width: 100%;
+    display: block;
+    /* No fixed height to prevent cropping */
+}
+
+.masonry-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.masonry-content:hover .masonry-overlay {
+    opacity: 1;
+}
+
+.masonry-caption {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .masonry-gallery {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .masonry-gallery {
+        column-count: 1;
+    }
 }
 
 .media-card {
@@ -1338,4 +1411,4 @@ img {
     .contact-buttons .btn {
         width: 100%;
     }
-} 
+}

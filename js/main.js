@@ -87,7 +87,7 @@ function initSwipers() {
     new Swiper('.skills-slider', {
         slidesPerView: 1,
         spaceBetween: 30,
-        loop: false,
+        loop: true,
         pagination: {
             el: '.skills-slider .swiper-pagination',
             clickable: true
@@ -108,6 +108,91 @@ function initSwipers() {
                 slidesPerView: 3
             }
         }
+    });
+    
+    // Initialize Masonry Grid
+    const initMasonryGrid = () => {
+        const masonryGallery = document.querySelector('.masonry-gallery');
+        
+        if (!masonryGallery) return;
+        
+        // Add fade-in animation to masonry items
+        const masonryItems = document.querySelectorAll('.masonry-item');
+        
+        // Set initial opacity for animation
+        masonryItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+            
+            // Add click event for lightbox effect
+            const content = item.querySelector('.masonry-content');
+            content.addEventListener('click', function() {
+                const img = this.querySelector('img');
+                const caption = this.querySelector('.masonry-caption').textContent;
+                
+                // Simple lightbox effect
+                const lightbox = document.createElement('div');
+                lightbox.className = 'masonry-lightbox';
+                lightbox.style.position = 'fixed';
+                lightbox.style.top = '0';
+                lightbox.style.left = '0';
+                lightbox.style.width = '100%';
+                lightbox.style.height = '100%';
+                lightbox.style.backgroundColor = 'rgba(0,0,0,0.9)';
+                lightbox.style.display = 'flex';
+                lightbox.style.alignItems = 'center';
+                lightbox.style.justifyContent = 'center';
+                lightbox.style.flexDirection = 'column';
+                lightbox.style.zIndex = '9999';
+                
+                const lightboxImg = document.createElement('img');
+                lightboxImg.src = img.src;
+                lightboxImg.style.maxHeight = '80vh';
+                lightboxImg.style.maxWidth = '90%';
+                lightboxImg.style.borderRadius = '8px';
+                
+                const lightboxCaption = document.createElement('div');
+                lightboxCaption.textContent = caption;
+                lightboxCaption.style.color = 'white';
+                lightboxCaption.style.marginTop = '20px';
+                lightboxCaption.style.fontSize = '1.2rem';
+                
+                lightbox.appendChild(lightboxImg);
+                lightbox.appendChild(lightboxCaption);
+                
+                // Close on click
+                lightbox.addEventListener('click', function() {
+                    document.body.removeChild(lightbox);
+                });
+                
+                document.body.appendChild(lightbox);
+            });
+        });
+        
+        // Animate items when they come into view
+        function revealItems() {
+            masonryItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isInView) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Initial check
+        revealItems();
+        
+        // Check on scroll
+        window.addEventListener('scroll', revealItems);
+    };
+    
+    // Initialize all components when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        initMasonryGrid();
     });
     
     // Note: Performances section now uses custom video slider
@@ -545,4 +630,4 @@ function initYouTubePreviews() {
             iframe.style.height = '100%';
         });
     });
-} 
+}
